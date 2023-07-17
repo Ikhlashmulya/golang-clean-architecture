@@ -3,6 +3,8 @@ package exception
 import (
 	"database/sql"
 	"errors"
+	"fmt"
+	"strings"
 
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/model"
 	"github.com/go-playground/validator/v10"
@@ -20,14 +22,23 @@ func ErrorHandler(ctx *fiber.Ctx, err error) error {
 			})
 	}
 
-	_, ok := err.(validator.ValidationErrors)
+	validationException, ok := err.(validator.ValidationErrors)
 	if ok {
+		errorMessages := make([]string, 0)
+		for _, value := range validationException {
+			errorMessages = append(errorMessages, fmt.Sprintf(
+				"[%s]: '%v' | needs to implements '%s'",
+				value.Field(),
+				value.Value(),
+				value.ActualTag(),
+			))
+		}
 		return ctx.
 			Status(fiber.StatusBadRequest).
 			JSON(model.WebResponse{
 				Code:    fiber.StatusBadRequest,
 				Status:  "BAD_REQUEST",
-				Message: err.Error(),
+				Message: strings.Join(errorMessages, " and "),
 			})
 	}
 
