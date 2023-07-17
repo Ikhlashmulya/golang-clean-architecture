@@ -69,7 +69,7 @@ func (handler *CategoryHandler) Create(ctx *fiber.Ctx) error {
 //	@Failure		400		{object}	model.WebResponse
 //	@Failure		500		{object}	model.WebResponse
 //	@Router			/categories/{id} [put]
-func (hanler *CategoryHandler) Update(ctx *fiber.Ctx) error {
+func (handler *CategoryHandler) Update(ctx *fiber.Ctx) error {
 	var updateCategoryRequest model.UpdateCategoryRequest
 	err := ctx.BodyParser(&updateCategoryRequest)
 	exception.PanicIfError(err)
@@ -79,7 +79,7 @@ func (hanler *CategoryHandler) Update(ctx *fiber.Ctx) error {
 
 	updateCategoryRequest.Id = categoryId
 
-	categoryResponse := hanler.CategoryUsecase.Update(ctx.Context(), updateCategoryRequest)
+	categoryResponse := handler.CategoryUsecase.Update(ctx.Context(), updateCategoryRequest)
 
 	return ctx.
 		Status(fiber.StatusOK).

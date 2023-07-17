@@ -3,7 +3,6 @@ package repository
 import (
 	"context"
 	"database/sql"
-	"errors"
 
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/domain"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/exception"
@@ -66,7 +65,7 @@ func (repository *CategoryRepositoryImpl) FindById(ctx context.Context, category
 		return category, nil
 	} else {
 		category = domain.Category{}
-		err = errors.New("category is not found")
+		err = sql.ErrNoRows
 		return
 	}
 }

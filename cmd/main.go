@@ -4,6 +4,7 @@ import (
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/config"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/injector"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/swagger"
 
 	_ "github.com/Ikhlashmulya/golang-clean-architecture-project-structure/docs"
@@ -15,7 +16,7 @@ import (
 //	@termsOfService	http://swagger.io/terms/
 
 //	@contact.name	Ikhlash Mulyanurahman
-//	@contact.url	https://www.ikhlashmula.github.io/
+//	@contact.url	https://www.ikhlashmulya.github.io/
 
 //	@license.name	Apache 2.0
 //	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
@@ -23,7 +24,9 @@ import (
 // @host		localhost:8080
 // @BasePath	/api
 func main() {
-	app := fiber.New()
+	app := fiber.New(config.NewFiberConfig())
+	app.Use(recover.New())
+	
 	configuration := config.NewConfig()
 
 	categoryHandler := injector.InitializedCategoryHandler(configuration)

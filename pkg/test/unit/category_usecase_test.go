@@ -96,7 +96,7 @@ func TestUpdateUsecase(t *testing.T) {
 				Name: "category2",
 			}
 
-			categoryRepository.EXPECT().FindById(context.Background(), category.Id).Return(category, errors.New("category is bot found"))
+			categoryRepository.EXPECT().FindById(context.Background(), category.Id).Return(category, errors.New("category is not found"))
 			// categoryRepository.EXPECT().Update(context.Background(), category)
 
 			validate := validator.New()
@@ -123,7 +123,7 @@ func TestUpdateUsecase(t *testing.T) {
 				Name: "category2",
 			}
 
-			categoryRepository.EXPECT().FindById(context.Background(), category.Id).Return(category, errors.New("category is bot found"))
+			categoryRepository.EXPECT().FindById(context.Background(), category.Id).Return(category, errors.New("category is not found"))
 			// categoryRepository.EXPECT().Update(context.Background(), category)
 
 			validate := validator.New()
@@ -170,7 +170,7 @@ func TestDeleteUsecase(t *testing.T) {
 				Name: "category2",
 			}
 
-			categoryRepository.EXPECT().FindById(context.Background(), category.Id).Return(category, errors.New("category is bot found"))
+			categoryRepository.EXPECT().FindById(context.Background(), category.Id).Return(category, errors.New("category is not found"))
 			// categoryRepository.EXPECT().Delete(context.Background(), category.Id)
 
 			validate := validator.New()
@@ -216,7 +216,7 @@ func TestFindByIdUsecase(t *testing.T) {
 
 			category := domain.Category{}
 
-			categoryRepository.EXPECT().FindById(context.Background(), category.Id).Return(category, errors.New("category is bot found"))
+			categoryRepository.EXPECT().FindById(context.Background(), category.Id).Return(category, errors.New("category is not found"))
 
 			validate := validator.New()
 			categoryUsecase := usecase.NewCategoryUsecase(validate, categoryRepository)
