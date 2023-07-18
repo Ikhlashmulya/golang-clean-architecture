@@ -170,7 +170,7 @@ func TestFindByIdRepository(t *testing.T) {
 
 		category, err := categoryRepository.FindById(context.Background(), 2)
 		if assert.Error(t, err) {
-			assert.Equal(t, "category is not found", err.Error())
+			assert.Equal(t, sql.ErrNoRows, err)
 		}
 		assert.Empty(t, category)
 

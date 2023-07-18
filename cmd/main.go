@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/config"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/exception"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/injector"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
@@ -34,5 +35,6 @@ func main() {
 
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
-	app.Listen(":8080")
+	err := app.Listen(":8080")
+	exception.PanicIfError(err)
 }

@@ -10,6 +10,8 @@ require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/gin-gonic/gin v1.9.0 // indirect
 	github.com/goccy/go-json v0.10.0 // indirect
+	github.com/hashicorp/errwrap v1.1.0 // indirect
+	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.0.9 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421 // indirect
@@ -17,6 +19,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.9 // indirect
+	go.uber.org/atomic v1.7.0 // indirect
 	golang.org/x/arch v0.0.0-20210923205945-b76863e36670 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 )
@@ -38,6 +41,7 @@ require (
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/gofiber/fiber/v2 v2.48.0 // indirect
 	github.com/gofiber/swagger v0.1.12 // indirect
+	github.com/golang-migrate/migrate/v4 v4.16.2
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/google/wire v0.5.0
 	github.com/jinzhu/inflection v1.0.0 // indirect
