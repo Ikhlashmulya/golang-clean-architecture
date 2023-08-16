@@ -3,11 +3,11 @@ package usecase
 import (
 	"context"
 
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/domain"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/exception"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/mapper"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/model"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/repository"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/domain"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/exception"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/mapper"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/model"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/repository"
 	"github.com/go-playground/validator/v10"
 )
 

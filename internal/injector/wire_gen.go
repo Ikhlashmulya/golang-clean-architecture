@@ -8,10 +8,10 @@ package injector
 
 import (
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/config"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/database"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/delivery/http/handler"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/repository"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/usecase"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/delivery/http/handler"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/infrastructure"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/repository"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/usecase"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -19,7 +19,7 @@ import (
 
 func InitializedCategoryHandler(config2 *config.Config) *handler.CategoryHandler {
 	validate := validator.New()
-	db := database.NewDB(config2)
+	db := infrastructure.NewDB(config2)
 	categoryRepository := repository.NewCategoryRepository(db)
 	categoryUsecase := usecase.NewCategoryUsecase(validate, categoryRepository)
 	categoryHandler := handler.NewCategoryHandler(categoryUsecase)

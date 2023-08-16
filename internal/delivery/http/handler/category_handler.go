@@ -3,9 +3,9 @@ package handler
 import (
 	"strconv"
 
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/exception"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/model"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/usecase"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/exception"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/model"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/usecase"
 	"github.com/gofiber/fiber/v2"
 )
 

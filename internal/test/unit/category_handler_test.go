@@ -7,9 +7,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/delivery/http/handler"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/mock"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/model"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/delivery/http/handler"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/mock"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/model"
 	"github.com/gofiber/fiber/v2"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"

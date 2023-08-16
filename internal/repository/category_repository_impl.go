@@ -4,8 +4,8 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/domain"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/exception"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/domain"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/exception"
 )
 
 type CategoryRepositoryImpl struct {

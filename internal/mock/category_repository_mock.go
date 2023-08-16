@@ -8,7 +8,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	domain "github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/domain"
+	domain "github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/domain"
 	gomock "go.uber.org/mock/gomock"
 )
 

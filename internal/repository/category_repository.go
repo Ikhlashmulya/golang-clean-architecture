@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/domain"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/domain"
 )
 
 type CategoryRepository interface {

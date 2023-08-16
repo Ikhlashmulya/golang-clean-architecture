@@ -3,7 +3,7 @@ package usecase
 import (
 	"context"
 
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/model"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/model"
 )
 
 type CategoryUsecase interface {

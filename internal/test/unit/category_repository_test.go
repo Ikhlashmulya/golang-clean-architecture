@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/domain"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/repository"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/domain"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/repository"
 	"github.com/stretchr/testify/assert"
 )
 

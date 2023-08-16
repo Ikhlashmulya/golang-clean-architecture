@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/model"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/model"
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 )

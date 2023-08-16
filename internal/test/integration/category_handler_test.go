@@ -10,12 +10,12 @@ import (
 	"testing"
 
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/config"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/database"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/delivery/http/handler"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/domain"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/model"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/repository"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/usecase"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/delivery/http/handler"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/domain"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/infrastructure"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/model"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/repository"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/usecase"
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
@@ -23,7 +23,7 @@ import (
 )
 
 var configuration = config.NewConfig("../../../.env.test")
-var db = database.NewDB(configuration)
+var db = infrastructure.NewDB(configuration)
 var validate = validator.New()
 var categoryRepository = repository.NewCategoryRepository(db)
 var categoryUsecase = usecase.NewCategoryUsecase(validate, categoryRepository)

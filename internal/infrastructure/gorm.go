@@ -1,4 +1,4 @@
-package database
+package infrastructure 
 
 import (
 	"database/sql"
@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/config"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/exception"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/exception"
 	_ "github.com/go-sql-driver/mysql"
 )
 

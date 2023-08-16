@@ -8,7 +8,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	model "github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/model"
+	model "github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/model"
 	gomock "go.uber.org/mock/gomock"
 )
 

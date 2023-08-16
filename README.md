@@ -17,11 +17,11 @@ and here's the explanation of the project structure:
 - **cmd** : This directory contains the main entry point of the project. Usually, for the place main application file here, which is used to start and run the application.
 - **config**:  This directory holds configuration files for the project.
 - **docs**: This directory contains documentation-related files for the project. 
-- **internal** : This directory is used to organize internal code of the project that should not be accessed from outside the package. 
-- **pkg**:  This directory contains code that can be used by the project and other projects (if your project is used as a library).
+- **internal** : This directory is used to organize internal code of the project. 
 
 other directories :
 
+  - **infrastructure** : This directory contains framework or driver layer in clean architecture
   - **delivery** : This directory contains code related to data delivery, such as HTTP implementation or RPC.
   - **domain**: This directory contains the domain data structure definitions.
   - **exception**: This directory contains code related to error handling.

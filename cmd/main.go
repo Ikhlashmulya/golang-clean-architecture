@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/config"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/exception"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/injector"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/exception"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/injector"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/swagger"

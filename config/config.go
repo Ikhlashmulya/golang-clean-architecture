@@ -3,7 +3,7 @@ package config
 import (
 	"os"
 
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/pkg/exception"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/exception"
 	"github.com/joho/godotenv"
 )
 
