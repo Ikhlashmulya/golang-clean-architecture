@@ -13,15 +13,17 @@ import (
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/repository"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/usecase"
 	"github.com/go-playground/validator/v10"
+	"github.com/gofiber/fiber/v2"
 )
 
 // Injectors from wire.go:
 
-func InitializedCategoryHandler(config2 *config.Config) *handler.CategoryHandler {
+func InitializedApp(config2 *config.Config) *fiber.App {
 	validate := validator.New()
 	db := infrastructure.NewDB(config2)
 	categoryRepository := repository.NewCategoryRepository(db)
 	categoryUsecase := usecase.NewCategoryUsecase(validate, categoryRepository)
 	categoryHandler := handler.NewCategoryHandler(categoryUsecase)
-	return categoryHandler
+	app := infrastructure.NewFiberApp(categoryHandler)
+	return app
 }
