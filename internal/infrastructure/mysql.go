@@ -1,25 +1,31 @@
-package infrastructure 
+package infrastructure
 
 import (
 	"database/sql"
 	"fmt"
 	"time"
 
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/config"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/exception"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/spf13/viper"
 )
 
-func NewDB(configuration *config.Config) *sql.DB {
+func NewDB(configuration *viper.Viper) *sql.DB {
+	username := configuration.GetString("database.username")
+	password := configuration.GetString("database.password")
+	host := configuration.GetString("database.host")
+	dbname := configuration.GetString("database.name")
+	port := configuration.GetString("database.port")
+
 	db, err := sql.Open(
 		"mysql",
 		fmt.Sprintf(
 			"%s:%s@tcp(%s:%s)/%s",
-			configuration.Get("DB_USERNAME"),
-			configuration.Get("DB_PASSWORD"),
-			configuration.Get("DB_HOST"),
-			configuration.Get("DB_PORT"),
-			configuration.Get("DB_NAME"),
+			username,
+			password,
+			host,
+			port,
+			dbname,
 		),
 	)
 	exception.PanicIfError(err)

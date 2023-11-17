@@ -4,7 +4,6 @@
 package injector
 
 import (
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/config"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/delivery/http/handler"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/infrastructure"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/repository"
@@ -12,9 +11,10 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/wire"
+	"github.com/spf13/viper"
 )
 
-func InitializedApp(config *config.Config) *fiber.App {
+func InitializedApp(config *viper.Viper) *fiber.App {
 	wire.Build(
 		infrastructure.NewDB,
 		repository.NewCategoryRepository,

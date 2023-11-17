@@ -22,7 +22,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var configuration = config.NewConfig("../../../.env.test")
+var configuration = config.NewConfig(".")
 var db = infrastructure.NewDB(configuration)
 var validate = validator.New()
 var categoryRepository = repository.NewCategoryRepository(db)
