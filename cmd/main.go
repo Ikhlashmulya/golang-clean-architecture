@@ -22,9 +22,11 @@ import (
 // @host			localhost:8080
 // @BasePath		/api
 func main() {
-	configuration := config.NewConfig()
+	configuration := config.NewConfig(".")
 	app := injector.InitializedApp(configuration)
 
-	err := app.Listen(":8080")
+	port := configuration.GetString("app.port")
+
+	err := app.Listen(":" + port)
 	exception.PanicIfError(err)
 }

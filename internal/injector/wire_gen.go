@@ -7,20 +7,20 @@
 package injector
 
 import (
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/config"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/delivery/http/handler"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/infrastructure"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/repository"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/usecase"
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
+	"github.com/spf13/viper"
 )
 
 // Injectors from wire.go:
 
-func InitializedApp(config2 *config.Config) *fiber.App {
+func InitializedApp(config *viper.Viper) *fiber.App {
 	validate := validator.New()
-	db := infrastructure.NewDB(config2)
+	db := infrastructure.NewDB(config)
 	categoryRepository := repository.NewCategoryRepository(db)
 	categoryUsecase := usecase.NewCategoryUsecase(validate, categoryRepository)
 	categoryHandler := handler.NewCategoryHandler(categoryUsecase)
