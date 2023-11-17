@@ -19,14 +19,7 @@ func NewDB(configuration *viper.Viper) *sql.DB {
 
 	db, err := sql.Open(
 		"mysql",
-		fmt.Sprintf(
-			"%s:%s@tcp(%s:%s)/%s",
-			username,
-			password,
-			host,
-			port,
-			dbname,
-		),
+		fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", username, password, host, port, dbname),
 	)
 	exception.PanicIfError(err)
 
