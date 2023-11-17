@@ -1,9 +1,6 @@
 package config
 
 import (
-	"fmt"
-	"path"
-
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/exception"
 	"github.com/spf13/viper"
 )
