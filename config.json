@@ -6,7 +6,15 @@
         "host": "localhost",
         "port": 3306
     },
+    "database_test": {
+        "username": "root",
+        "password": "",
+        "name": "golang_restful_api_test",
+        "host": "localhost",
+        "port": 3306
+    },
     "app": {
+        "name": "Golang RESTful API",
         "port": 8080
     }
 }

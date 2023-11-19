@@ -18,26 +18,16 @@ import (
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/usecase"
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/stretchr/testify/assert"
 )
 
-var configuration = config.NewConfig(".")
-var db = infrastructure.NewDB(configuration)
+var configuration = config.NewConfig()
+var db = infrastructure.NewDBTesting(configuration)
 var validate = validator.New()
 var categoryRepository = repository.NewCategoryRepository(db)
 var categoryUsecase = usecase.NewCategoryUsecase(validate, categoryRepository)
 var categoryHandler = handler.NewCategoryHandler(categoryUsecase)
-var app = setupApp()
-
-func setupApp() *fiber.App {
-	app := fiber.New(config.NewFiberConfig())
-	app.Use(recover.New())
-
-	categoryHandler.Route(app)
-
-	return app
-}
+var app = infrastructure.NewFiberApp(categoryHandler)
 
 func TestCreateCategory(t *testing.T) {
 	t.Run("OK", func(t *testing.T) {

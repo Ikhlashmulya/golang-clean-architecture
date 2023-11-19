@@ -22,7 +22,7 @@ import (
 // @host			localhost:8080
 // @BasePath		/api
 func main() {
-	configuration := config.NewConfig(".")
+	configuration := config.NewConfig()
 	app := injector.InitializedApp(configuration)
 
 	port := configuration.GetString("app.port")

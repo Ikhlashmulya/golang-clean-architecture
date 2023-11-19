@@ -30,3 +30,19 @@ func NewDB(configuration *viper.Viper) *sql.DB {
 
 	return db
 }
+
+func NewDBTesting(configuration *viper.Viper) *sql.DB {
+	username := configuration.GetString("database_test.username")
+	password := configuration.GetString("database_test.password")
+	host := configuration.GetString("database_test.host")
+	dbname := configuration.GetString("database_test.name")
+	port := configuration.GetString("database_test.port")
+
+	db, err := sql.Open(
+		"mysql",
+		fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", username, password, host, port, dbname),
+	)
+	exception.PanicIfError(err)
+
+	return db
+}
