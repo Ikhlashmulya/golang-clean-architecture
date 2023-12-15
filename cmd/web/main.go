@@ -7,7 +7,9 @@ import (
 	"syscall"
 
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/config"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/delivery/http"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/delivery/http/handler"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/delivery/http/middleware"
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/delivery/http/route"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/infrastructure"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/repository"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/usecase"
@@ -24,12 +26,13 @@ func main() {
 	logger := infrastructure.NewLogger(config)
 	validate := validator.New()
 	userRepository := repository.NewUserRepository(db)
-	userUsecase := usecase.NewUserUsecase(userRepository, logger, validate)
-	userHandler := http.NewUserHandler(userUsecase, logger)
+	userUsecase := usecase.NewUserUsecase(userRepository, logger, validate, config.GetString("security.jwt_secret_key"))
+	userHandler := handler.NewUserHandler(userUsecase, logger)
 
-	app.Post("/api/login", userHandler.Login)
-	app.Post("/api/register", userHandler.Register)
+	authMiddleware := middleware.NewAuth(userUsecase, logger)
 
+	route := route.RegisterRoute(app.Group("/api"), userHandler, authMiddleware)
+	route.SetupRoute()
 
 	go func() {
 		if err := app.Listen(fmt.Sprintf(":%v", port)); err != nil {

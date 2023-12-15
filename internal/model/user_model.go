@@ -13,7 +13,7 @@ type LoginUserRequest struct {
 
 type UpdateUserRequest struct {
 	Name     string `json:"name,omitempty" validate:"max=100"`
-	Username string `json:"username,omitempty" validate:"max=100"`
+	Username string `validate:"max=100"`
 	Password string `json:"password,omitempty" validate:"max=100"`
 }
 

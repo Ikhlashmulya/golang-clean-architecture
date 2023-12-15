@@ -29,13 +29,16 @@ type UserUsecaseImpl struct {
 	UserRepository repository.UserRepository
 	Logger         *logrus.Logger
 	Validate       *validator.Validate
+	SecretKey      string
 }
 
-func NewUserUsecase(userRepo repository.UserRepository, log *logrus.Logger, validate *validator.Validate) UserUsecase {
+func NewUserUsecase(userRepo repository.UserRepository, log *logrus.Logger,
+	validate *validator.Validate, secretKey string) UserUsecase {
 	return &UserUsecaseImpl{
 		UserRepository: userRepo,
 		Logger:         log,
 		Validate:       validate,
+		SecretKey:      secretKey,
 	}
 }
 
@@ -58,7 +61,7 @@ func (uc *UserUsecaseImpl) Register(ctx context.Context, request *model.Register
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(request.Password), bcrypt.DefaultCost)
 	if err != nil {
-		uc.Logger.WithError(err).Error("error hashing password")
+		uc.Logger.WithError(err).Error("failed hashing password")
 		return nil, exception.ErrInternalServerError
 	}
 
@@ -68,7 +71,7 @@ func (uc *UserUsecaseImpl) Register(ctx context.Context, request *model.Register
 	user.Password = string(hashedPassword)
 
 	if err := uc.UserRepository.Create(ctx, user); err != nil {
-		uc.Logger.WithError(err).Error("error create user to database")
+		uc.Logger.WithError(err).Error("failed create user to database")
 		return nil, fiber.ErrInternalServerError
 	}
 
@@ -89,7 +92,7 @@ func (uc *UserUsecaseImpl) Login(ctx context.Context, request *model.LoginUserRe
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(request.Password)); err != nil {
 		uc.Logger.WithError(err).Error("failed to compare hashedPassword and password")
-		return nil, exception.ErrPasswordNotMatch
+		return nil, exception.ErrUserPasswordNotMatch
 	}
 
 	claims := jwt.MapClaims{
@@ -97,7 +100,7 @@ func (uc *UserUsecaseImpl) Login(ctx context.Context, request *model.LoginUserRe
 		"exp":      time.Now().Add(2 * time.Hour).Unix(),
 	}
 
-	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte("secret"))
+	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(uc.SecretKey))
 	if err != nil {
 		uc.Logger.WithError(err).Error("failed sign token")
 		return nil, exception.ErrInternalServerError
@@ -130,7 +133,7 @@ func (uc *UserUsecaseImpl) Update(ctx context.Context, request *model.UpdateUser
 	if request.Password != "" {
 		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(request.Password), bcrypt.DefaultCost)
 		if err != nil {
-			uc.Logger.WithError(err).Error("error hashing password")
+			uc.Logger.WithError(err).Error("failed hashing password")
 			return nil, exception.ErrInternalServerError
 		}
 
@@ -161,5 +164,28 @@ func (uc *UserUsecaseImpl) Current(ctx context.Context, request *model.GetUserRe
 }
 
 func (uc *UserUsecaseImpl) Verify(ctx context.Context, request *model.VerifyUserRequest) (*model.Auth, error) {
-	panic("not implemented") // TODO: Implement
+	token, err := jwt.Parse(request.AccessToken, func(t *jwt.Token) (interface{}, error) {
+		return []byte(uc.SecretKey), nil
+	})
+	if err != nil {
+		uc.Logger.WithError(err).Error("user unauthorized")
+		return nil, exception.ErrUserUnauthorized
+	}
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return nil, exception.ErrUserUnauthorized
+	}
+
+	countUser, err := uc.UserRepository.CountByUsername(ctx, claims["username"].(string))
+	if err != nil {
+		uc.Logger.WithError(err).Error("failed count user by username")
+		return nil, exception.ErrInternalServerError
+	}
+
+	if countUser == 0 {
+		return nil, exception.ErrUserUnauthorized
+	}
+
+	return &model.Auth{Username: claims["username"].(string)}, nil
 }

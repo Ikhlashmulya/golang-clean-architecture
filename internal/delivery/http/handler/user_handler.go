@@ -1,4 +1,4 @@
-package http
+package handler
 
 import (
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/model"
@@ -32,7 +32,11 @@ func (h *UserHandler) Register(c *fiber.Ctx) error {
 		return err
 	}
 
-	return c.Status(fiber.StatusCreated).JSON(response)
+	return c.
+		Status(fiber.StatusCreated).
+		JSON(&model.WebResponse[*model.UserResponse]{
+			Data: response,
+		})
 }
 
 func (h *UserHandler) Login(c *fiber.Ctx) error {
@@ -48,5 +52,46 @@ func (h *UserHandler) Login(c *fiber.Ctx) error {
 		return err
 	}
 
-	return c.JSON(response)
+	return c.
+		JSON(&model.WebResponse[*model.TokenResponse]{
+			Data: response,
+		})
+}
+
+func (h *UserHandler) Current(c *fiber.Ctx) error {
+	auth := c.Locals("auth").(*model.Auth)
+
+	response, err := h.UserUsecase.Current(c.Context(), &model.GetUserRequest{Username: auth.Username})
+	if err != nil {
+		h.Logger.WithError(err).Error("error get current user")
+		return err
+	}
+
+	return c.
+		JSON(&model.WebResponse[*model.UserResponse]{
+			Data: response,
+		})
+}
+
+func (h *UserHandler) Update(c *fiber.Ctx) error {
+	auth := c.Locals("auth").(*model.Auth)
+
+	updateUserRequest := new(model.UpdateUserRequest)
+	if err := c.BodyParser(updateUserRequest); err != nil {
+		h.Logger.WithError(err).Error("error parsing request body")
+		return err
+	}
+
+	updateUserRequest.Username = auth.Username
+	response, err := h.UserUsecase.Update(c.Context(), updateUserRequest)
+	if err != nil {
+		h.Logger.WithError(err).Error("error update user")
+		return err
+	}
+
+	return c.
+		JSON(&model.WebResponse[*model.UserResponse]{
+			Data: response,
+		})
+
 }
