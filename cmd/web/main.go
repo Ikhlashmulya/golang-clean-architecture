@@ -30,8 +30,7 @@ func main() {
 
 	authMiddleware := middleware.NewAuth(userUsecase, logger)
 
-	route := route.RegisterRoute(app, userHandler, authMiddleware)
-	route.SetupRoute()
+	route.RegisterRoute(app, userHandler, authMiddleware)
 
 	go func() {
 		if err := app.Listen(fmt.Sprintf(":%v", port)); err != nil {

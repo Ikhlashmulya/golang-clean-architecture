@@ -30,7 +30,6 @@ type e2eTestSuite struct {
 	UserUsecase    usecase.UserUsecase
 	UserHandler    *handler.UserHandler
 	AuthMiddleware fiber.Handler
-	Route          *route.RouteConfig
 }
 
 func TestE2eSuite(t *testing.T) {
@@ -47,8 +46,7 @@ func (s *e2eTestSuite) SetupSuite() {
 	s.UserUsecase = usecase.NewUserUsecase(s.UserRepository, s.Log, s.Validate, s.Config.GetString("JWT_SECRET_KEY"))
 	s.UserHandler = handler.NewUserHandler(s.UserUsecase, s.Log)
 	s.AuthMiddleware = middleware.NewAuth(s.UserUsecase, s.Log)
-	s.Route = route.RegisterRoute(s.App, s.UserHandler, s.AuthMiddleware)
-	s.Route.SetupRoute()
+	route.RegisterRoute(s.App, s.UserHandler, s.AuthMiddleware)
 }
 
 func (s *e2eTestSuite) SetupTest() {
