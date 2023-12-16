@@ -30,21 +30,44 @@ other directories :
 
 This project structure looks well-organized and follows many best practices in Go application development. It separates concerns clearly, making the code easy to maintain and extend.
 
+## Install
+```
+git clone https://github.com/Ikhlashmulya/golang-clean-architecture-project-structure.git
+```
+
+```
+cp .env.example .env
+```
+
+## Run
+```
+go run cmd/web/main.go
+```
 ## Testing
 
-### Unit Test
-`make test.unit`
+### Run Unit Test
+```
+make test.unit
+```
 
-### Integration Test
-`make test.integration`
+### Run Integration Test
+```
+make test.integration
+```
 
 ## Database Migration
 
 ### Create
-`make migrate.make name=create_table_users`
+```
+make migrate.make name=create_table_users
+```
 
 ### Up
-`make migrate.up`
+```
+make migrate.up
+```
 
 ### Down
-`make migrate.down`
+```
+make migrate.down
+```
