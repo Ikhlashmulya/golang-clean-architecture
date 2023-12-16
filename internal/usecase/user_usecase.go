@@ -12,7 +12,6 @@ import (
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/model/mapper"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/repository"
 	"github.com/go-playground/validator/v10"
-	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/sirupsen/logrus"
 )
@@ -72,7 +71,7 @@ func (uc *UserUsecaseImpl) Register(ctx context.Context, request *model.Register
 
 	if err := uc.UserRepository.Create(ctx, user); err != nil {
 		uc.Logger.WithError(err).Error("failed create user to database")
-		return nil, fiber.ErrInternalServerError
+		return nil, exception.ErrInternalServerError
 	}
 
 	return mapper.ToUserResponse(user), nil

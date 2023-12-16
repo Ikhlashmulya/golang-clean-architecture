@@ -10,8 +10,8 @@ func New() *viper.Viper {
 	viper := viper.New()
 	viper.AddConfigPath("../")
 	viper.AddConfigPath("./")
-	viper.SetConfigName("config")
-	viper.SetConfigType("json")
+	viper.SetConfigFile(".env")
+	viper.AutomaticEnv() //use OS environment variable if exists
 
 	if err := viper.ReadInConfig(); err != nil {
 		panic(fmt.Errorf("error loading configuration : %+v", err))

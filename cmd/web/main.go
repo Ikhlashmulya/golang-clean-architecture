@@ -20,13 +20,13 @@ func main() {
 	config := config.New()
 
 	app := infrastructure.NewFiber(config)
-	port := config.Get("app.port")
+	port := config.Get("APP_PORT")
 
 	db := infrastructure.NewGorm(config)
 	logger := infrastructure.NewLogger(config)
 	validate := validator.New()
 	userRepository := repository.NewUserRepository(db)
-	userUsecase := usecase.NewUserUsecase(userRepository, logger, validate, config.GetString("security.jwt_secret_key"))
+	userUsecase := usecase.NewUserUsecase(userRepository, logger, validate, config.GetString("JWT_SECRET_KEY"))
 	userHandler := handler.NewUserHandler(userUsecase, logger)
 
 	authMiddleware := middleware.NewAuth(userUsecase, logger)
@@ -40,10 +40,10 @@ func main() {
 		}
 	}()
 
-	c := make(chan os.Signal, 1)                    // Create channel to signify a signal being sent
-	signal.Notify(c, os.Interrupt, syscall.SIGTERM) // When an interrupt or termination signal is sent, notify the
+	ch := make(chan os.Signal, 1)                    // Create channel to signify a signal being sent
+	signal.Notify(ch, os.Interrupt, syscall.SIGTERM) // When an interrupt or termination signal is sent, notify the channel
 
-	<-c // This blocks the main thread until an interrupt is received
+	<-ch // This blocks the main thread until an interrupt is received
 
 	// Your cleanup tasks go here
 	_ = app.Shutdown()
