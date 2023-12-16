@@ -13,7 +13,6 @@ import (
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/infrastructure"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/repository"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/usecase"
-	"github.com/go-playground/validator/v10"
 )
 
 func main() {
@@ -24,7 +23,7 @@ func main() {
 
 	db := infrastructure.NewGorm(config)
 	logger := infrastructure.NewLogger(config)
-	validate := validator.New()
+	validate := infrastructure.NewValidator(config)
 	userRepository := repository.NewUserRepository(db)
 	userUsecase := usecase.NewUserUsecase(userRepository, logger, validate, config.GetString("JWT_SECRET_KEY"))
 	userHandler := handler.NewUserHandler(userUsecase, logger)
