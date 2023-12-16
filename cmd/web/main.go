@@ -30,7 +30,7 @@ func main() {
 
 	authMiddleware := middleware.NewAuth(userUsecase, logger)
 
-	route := route.RegisterRoute(app.Group("/api"), userHandler, authMiddleware)
+	route := route.RegisterRoute(app, userHandler, authMiddleware)
 	route.SetupRoute()
 
 	go func() {

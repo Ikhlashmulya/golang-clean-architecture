@@ -6,23 +6,31 @@ import (
 )
 
 type RouteConfig struct {
-	Router         fiber.Router
+	App            *fiber.App
 	UserHandler    *handler.UserHandler
 	AuthMiddleware fiber.Handler
 }
 
-func RegisterRoute(router fiber.Router, userHandler *handler.UserHandler, authMiddleware fiber.Handler) *RouteConfig {
+func RegisterRoute(app *fiber.App, userHandler *handler.UserHandler, authMiddleware fiber.Handler) *RouteConfig {
 	return &RouteConfig{
-		Router:         router,
+		App:            app,
 		UserHandler:    userHandler,
 		AuthMiddleware: authMiddleware,
 	}
 }
 
 func (r *RouteConfig) SetupRoute() {
-	r.Router.Post("/users", r.UserHandler.Register)
-	r.Router.Post("/users/_login", r.UserHandler.Login)
-	r.Router.Use(r.AuthMiddleware)
-	r.Router.Get("/users/_current", r.UserHandler.Current)
-	r.Router.Patch("/users/_current", r.UserHandler.Update)
+	r.SetupPublicRoute()
+	r.SetupProtectedRoute()
+}
+
+func (r *RouteConfig) SetupPublicRoute() {
+	r.App.Post("/api/users", r.UserHandler.Register)
+	r.App.Post("/api/users/_login", r.UserHandler.Login)
+}
+
+func (r *RouteConfig) SetupProtectedRoute() {
+	r.App.Use(r.AuthMiddleware)
+	r.App.Get("/api/users/_current", r.UserHandler.Current)
+	r.App.Patch("/api/users/_current", r.UserHandler.Update)
 }
