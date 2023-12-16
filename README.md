@@ -71,3 +71,8 @@ make migrate.up
 ```
 make migrate.down
 ```
+
+### Force
+```
+make migrate.force version=20231216100
+```

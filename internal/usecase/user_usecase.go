@@ -95,6 +95,7 @@ func (uc *UserUsecaseImpl) Login(ctx context.Context, request *model.LoginUserRe
 	}
 
 	claims := jwt.MapClaims{
+		"id":       user.ID,
 		"username": user.Username,
 		"exp":      time.Now().Add(2 * time.Hour).Unix(),
 	}
@@ -186,5 +187,8 @@ func (uc *UserUsecaseImpl) Verify(ctx context.Context, request *model.VerifyUser
 		return nil, exception.ErrUserUnauthorized
 	}
 
-	return &model.Auth{Username: claims["username"].(string)}, nil
+	return &model.Auth{
+		Username: claims["username"].(string),
+		ID:       claims["id"].(uint),
+	}, nil
 }

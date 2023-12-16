@@ -33,3 +33,6 @@ migrate.up:
 
 migrate.down:
 	migrate -database $(DATABASE_URL) -path db/migrations down
+
+migrate.force:
+	migrate -database $(DATABASE_URL) -path db/migrations force $(version)
