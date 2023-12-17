@@ -43,6 +43,11 @@ rm -rf .git/
 cp .env.example .env
 ```
 
+or using [gonew](https://pkg.go.dev/golang.org/x/tools/cmd/gonew)
+
+```
+gonew github.com/Ikhlashmulya/golang-clean-architecture-project-structure github.com/<username>/<your-repo>
+```
 ## Run
 ```
 go run cmd/web/main.go
