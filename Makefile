@@ -25,7 +25,7 @@ include .env
 
 DATABASE_URL="mysql://$(DB_USER):$(DB_PASSWORD)@tcp($(DB_HOST):$(DB_PORT))/$(DB_NAME)"
 
-migrate.make:
+migrate.create:
 	migrate create -ext sql -dir db/migrations $(name)
 
 migrate.up:
