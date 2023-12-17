@@ -36,6 +36,10 @@ git clone https://github.com/Ikhlashmulya/golang-clean-architecture-project-stru
 ```
 
 ```
+rm -rf .git/
+```
+
+```
 cp .env.example .env
 ```
 
@@ -59,7 +63,7 @@ make test.integration
 
 ### Create
 ```
-make migrate.make name=create_table_users
+make migrate.create name=create_table_users
 ```
 
 ### Up
