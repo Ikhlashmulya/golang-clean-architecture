@@ -1,22 +1,26 @@
 package config
 
 import (
-	"os"
+	"fmt"
+	"path"
+	"path/filepath"
+	"runtime"
 
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/exception"
-	"github.com/joho/godotenv"
+	"github.com/spf13/viper"
 )
 
-type Config struct {
-}
+func New() *viper.Viper {
+	_, filename, _, _ := runtime.Caller(0)
+	currentDir := filepath.Dir(filename)
+	configFile := path.Join(currentDir, ".." ,".env")
 
-func NewConfig(filenames ...string) *Config {
-	err := godotenv.Load(filenames...)
-	exception.PanicIfError(err)
+	viper := viper.New()
+	viper.SetConfigFile(configFile)
+	viper.AutomaticEnv() //use OS environment variable
 
-	return &Config{}
-}
+	if err := viper.ReadInConfig(); err != nil {
+		panic(fmt.Errorf("error loading configuration : %+v", err))
+	}
 
-func (config *Config) Get(key string) string {
-	return os.Getenv(key)
+	return viper
 }

@@ -1,20 +1,23 @@
 package infrastructure
 
 import (
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/config"
-	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/delivery/http/handler"
+	"time"
+
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/exception"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-	"github.com/gofiber/swagger"
+	"github.com/spf13/viper"
 )
 
-func NewFiberApp(categoryHandler *handler.CategoryHandler) *fiber.App {
-	app := fiber.New(config.NewFiberConfig())
+func NewFiber(config *viper.Viper) *fiber.App {
+	app := fiber.New(fiber.Config{
+		AppName:      config.GetString("APP_NAME"),
+		ErrorHandler: exception.NewErrorHandler(),
+		Prefork:      config.GetBool("APP_PREFORK"),
+		WriteTimeout: config.GetDuration("APP_TIMEOUT") * time.Second,
+		ReadTimeout:  config.GetDuration("APP_TIMEOUT") * time.Second,
+	})
 	app.Use(recover.New())
-
-	app.Get("/swagger/*", swagger.HandlerDefault)
-
-	categoryHandler.Route(app)
 
 	return app
 }
