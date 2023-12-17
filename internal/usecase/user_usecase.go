@@ -20,7 +20,7 @@ type UserUsecase interface {
 	Register(ctx context.Context, request *model.RegisterUserRequest) (*model.UserResponse, error)
 	Login(ctx context.Context, request *model.LoginUserRequest) (*model.TokenResponse, error)
 	Update(ctx context.Context, request *model.UpdateUserRequest) (*model.UserResponse, error)
-	Current(ctx context.Context, requset *model.GetUserRequest) (*model.UserResponse, error)
+	Current(ctx context.Context, request *model.GetUserRequest) (*model.UserResponse, error)
 	Verify(ctx context.Context, request *model.VerifyUserRequest) (*model.Auth, error)
 }
 
