@@ -14,6 +14,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
 type UserUsecase interface {
@@ -28,16 +29,16 @@ type UserUsecaseImpl struct {
 	UserRepository repository.UserRepository
 	Logger         *logrus.Logger
 	Validate       *validator.Validate
-	SecretKey      string
+	Config         *viper.Viper
 }
 
 func NewUserUsecase(userRepo repository.UserRepository, log *logrus.Logger,
-	validate *validator.Validate, secretKey string) UserUsecase {
+	validate *validator.Validate, config *viper.Viper) UserUsecase {
 	return &UserUsecaseImpl{
 		UserRepository: userRepo,
 		Logger:         log,
 		Validate:       validate,
-		SecretKey:      secretKey,
+		Config:         config,
 	}
 }
 
@@ -100,7 +101,7 @@ func (uc *UserUsecaseImpl) Login(ctx context.Context, request *model.LoginUserRe
 		"exp":      time.Now().Add(2 * time.Hour).Unix(),
 	}
 
-	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(uc.SecretKey))
+	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(uc.Config.GetString("JWT_SECRET_KEY")))
 	if err != nil {
 		uc.Logger.WithError(err).Error("failed sign token")
 		return nil, exception.ErrInternalServerError
@@ -165,7 +166,7 @@ func (uc *UserUsecaseImpl) Current(ctx context.Context, request *model.GetUserRe
 
 func (uc *UserUsecaseImpl) Verify(ctx context.Context, request *model.VerifyUserRequest) (*model.Auth, error) {
 	token, err := jwt.Parse(request.AccessToken, func(t *jwt.Token) (interface{}, error) {
-		return []byte(uc.SecretKey), nil
+		return []byte(uc.Config.GetString("JWT_SECRET_KEY")), nil
 	})
 	if err != nil {
 		uc.Logger.WithError(err).Error("user unauthorized")
@@ -189,6 +190,6 @@ func (uc *UserUsecaseImpl) Verify(ctx context.Context, request *model.VerifyUser
 
 	return &model.Auth{
 		Username: claims["username"].(string),
-		ID:       claims["id"].(uint),
+		ID:       uint(claims["id"].(float64)),
 	}, nil
 }

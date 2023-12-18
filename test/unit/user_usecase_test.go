@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/config"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/domain"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/exception"
 	"github.com/Ikhlashmulya/golang-clean-architecture-project-structure/internal/model"
@@ -24,7 +25,7 @@ var (
 func TestRegisterUser(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	userRepository := mocks.NewMockUserRepository(ctrl)
-	userUsecase := usecase.NewUserUsecase(userRepository, logrus.New(), validator.New(), "secret key")
+	userUsecase := usecase.NewUserUsecase(userRepository, logrus.New(), validator.New(), config.New())
 
 	t.Run("success", func(t *testing.T) {
 		userRepository.EXPECT().CountByUsername(ctx, "johndoe").Return(int64(0), nil)
@@ -70,7 +71,7 @@ func TestRegisterUser(t *testing.T) {
 func TestLoginUser(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	userRepository := mocks.NewMockUserRepository(ctrl)
-	userUsecase := usecase.NewUserUsecase(userRepository, logrus.New(), validator.New(), "secret key")
+	userUsecase := usecase.NewUserUsecase(userRepository, logrus.New(), validator.New(), config.New())
 
 	user := createUser(t)
 
@@ -124,7 +125,7 @@ func TestLoginUser(t *testing.T) {
 func TestUpdateUser(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	userRepository := mocks.NewMockUserRepository(ctrl)
-	userUsecase := usecase.NewUserUsecase(userRepository, logrus.New(), validator.New(), "secret key")
+	userUsecase := usecase.NewUserUsecase(userRepository, logrus.New(), validator.New(), config.New())
 
 	user := createUser(t)
 
@@ -160,7 +161,7 @@ func TestUpdateUser(t *testing.T) {
 func TestCurrentUser(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	userRepository := mocks.NewMockUserRepository(ctrl)
-	userUsecase := usecase.NewUserUsecase(userRepository, logrus.New(), validator.New(), "secret key")
+	userUsecase := usecase.NewUserUsecase(userRepository, logrus.New(), validator.New(), config.New())
 
 	user := createUser(t)
 
@@ -188,7 +189,7 @@ func TestCurrentUser(t *testing.T) {
 func TestVerifyUser(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	userRepository := mocks.NewMockUserRepository(ctrl)
-	userUsecase := usecase.NewUserUsecase(userRepository, logrus.New(), validator.New(), "secret key")
+	userUsecase := usecase.NewUserUsecase(userRepository, logrus.New(), validator.New(), config.New())
 
 	user := createUser(t)
 

@@ -43,7 +43,7 @@ func (s *e2eTestSuite) SetupSuite() {
 	s.App = infrastructure.NewFiber(s.Config)
 	s.Validate = infrastructure.NewValidator(s.Config)
 	s.UserRepository = repository.NewUserRepository(s.DB)
-	s.UserUsecase = usecase.NewUserUsecase(s.UserRepository, s.Log, s.Validate, s.Config.GetString("JWT_SECRET_KEY"))
+	s.UserUsecase = usecase.NewUserUsecase(s.UserRepository, s.Log, s.Validate, s.Config)
 	s.UserHandler = handler.NewUserHandler(s.UserUsecase, s.Log)
 	s.AuthMiddleware = middleware.NewAuth(s.UserUsecase, s.Log)
 	route.RegisterRoute(s.App, s.UserHandler, s.AuthMiddleware)
