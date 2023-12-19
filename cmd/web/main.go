@@ -25,7 +25,7 @@ func main() {
 	logger := infrastructure.NewLogger(config)
 	validate := infrastructure.NewValidator(config)
 	userRepository := repository.NewUserRepository(db)
-	userUsecase := usecase.NewUserUsecase(userRepository, logger, validate, config.GetString("JWT_SECRET_KEY"))
+	userUsecase := usecase.NewUserUsecase(userRepository, logger, validate, config)
 	userHandler := handler.NewUserHandler(userUsecase, logger)
 
 	authMiddleware := middleware.NewAuth(userUsecase, logger)
