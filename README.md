@@ -32,7 +32,7 @@ This project structure looks well-organized and follows many best practices in G
 
 ## Install
 ```
-git clone https://github.com/Ikhlashmulya/golang-clean-architecture-project-structure.git
+git clone https://github.com/Ikhlashmulya/golang-clean-architecture.git
 ```
 
 ```
@@ -46,7 +46,7 @@ cp .env.example .env
 or using [gonew](https://pkg.go.dev/golang.org/x/tools/cmd/gonew)
 
 ```
-gonew github.com/Ikhlashmulya/golang-clean-architecture-project-structure github.com/<username>/<your-repo>
+gonew github.com/Ikhlashmulya/golang-clean-architecture github.com/<username>/<your-repo>
 ```
 ## Run
 ```
